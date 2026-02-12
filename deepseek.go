@@ -32,7 +32,7 @@ type ChatResponse struct {
 	} `json:"choices"`
 }
 
-func deepseekOneshot(userMessage string) (string, error) {
+func DeepseekOneshot(userMessage string) (string, error) {
 	const deepseekURL = "https://api.deepseek.com/v1/chat/completions"
 	if err := godotenv.Load(); err != nil {
 		return "", fmt.Errorf("load .env: %w", err)
