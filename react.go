@@ -59,13 +59,10 @@ If you have the answer, use "act": "finish|your answer here".`,
 			continue
 		}
 
-		fmt.Printf("DEBUG: Raw LLM response: %q\n", rawResponse)
-
 		err = json.Unmarshal([]byte(rawResponse), &resp)
 		if err == nil {
 			return &resp, nil
 		}
-		fmt.Printf("DEBUG: JSON parse error on retry %d: %v\n", retries, err)
 	}
 
 	return nil, fmt.Errorf("failed after 3 retries: %w", err)
@@ -86,9 +83,6 @@ func (a *Agent) Run() (*AgentResponse, error) {
 		if err != nil {
 			return nil, err
 		}
-		fmt.Printf("\n=== Step %d ===\n", i+1)
-		fmt.Printf("Reasoning: %s\n", resp.Reasoning)
-		fmt.Printf("Act: %s\n", resp.Act)
 
 		// Step 3: Check if finished
 		if strings.HasPrefix(resp.Act, "finish|") {
